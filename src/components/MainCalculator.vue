@@ -8,11 +8,12 @@ const result = computed(() => {
   return store.getters.getResultStrings
 })
 const calItems = computed(() => {
-  return ['C', '( )', '%', '÷', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '+/-', '0', '.', '=']
+  return ['C', '( )', '%', '÷', '7', '8', '9', 'x', '4', '5', '6', '-', '1', '2', '3', '+', '+/-', '0', '.', '=']
 })
 
 const itemSelect = (item: string) => {
   store.commit('setResultStrings', item);
+  console.log(item);
 }
 
 </script>
@@ -25,7 +26,13 @@ const itemSelect = (item: string) => {
     <v-main class="mt-5 ml-2 mr-2 flex-row">
       <!-- main -->
       <div v-for="(item, idx) in calItems" class="d-inline-flex">
-        <BasicButton :data="item" :idx="idx" class="ma-1" @itemSelect="itemSelect(item)" :key="item"/>
+        <BasicButton
+            :data="item"
+            :idx="idx"
+            class="ma-1"
+            @itemSelect="itemSelect(item)"
+            :key="item"
+        />
       </div>
     </v-main>
   </v-app>
