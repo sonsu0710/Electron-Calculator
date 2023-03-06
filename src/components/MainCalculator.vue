@@ -20,7 +20,7 @@ const itemSelect = (item: string) => {
 <template>
   <v-app id="inspire" class="d-flex ml-2 mr-2 h-screen">
     <div class="d-flex justify-end">
-      <div class="result-font mr-3">{{ result }}</div>
+      <div class="result-font mr-5">{{ result }}</div>
     </div>
     <v-main class="mt-5 ml-2 mr-2 flex-row">
       <!-- main -->

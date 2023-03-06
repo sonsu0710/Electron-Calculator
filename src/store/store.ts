@@ -2,11 +2,25 @@ import {createStore} from "vuex";
 
 interface State {
     result: string[];
+
+    plusArr: string[];
+    minusArr: string[];
+    multipleArr: string[];
+    divisionArr: string[];
+}
+
+function isNumber(item: unknown) {
+    return !Number.isNaN(Number(item))
 }
 
 export default createStore<State>({
     state: {
-        result: []
+        result: [],
+
+        plusArr: [],
+        minusArr: [],
+        multipleArr: [],
+        divisionArr: [],
     },
     getters: {
         getResultViews: function (state) {
@@ -26,9 +40,12 @@ export default createStore<State>({
             }
             const operator = ['%', '÷', 'x', '-', '+',];
 
+            const lastItem = state.result[state.result.length - 1];
+
 
             // todo 숫자 입력
-            if (numArr.includes(payload)) result.push(payload);
+            if (numArr.includes(payload) && lastItem === ')') result.push('x' + payload);
+            else  if (numArr.includes(payload)) result.push(payload);
 
             // todo 연산자 입력
             // 아무것도 입력되지 않은 상태라면 에러 얼러트
@@ -36,7 +53,7 @@ export default createStore<State>({
             // 마지막에 연산자가 입력된 상태에서 % 기호 입력시 에러
             if (state.result.length === 0 && operator.includes(payload)) alert('완성되지 않은 수식입니다');
             else if (operator.includes(state.result[state.result.length - 1]) && payload === '%') alert('완성되지 않은 수식입니다');
-            else if (operator.includes(payload) && operator.includes(state.result[state.result.length - 1])) {
+            else if (operator.includes(payload) && operator.includes(lastItem)) {
                 state.result.pop();
                 state.result.push(payload);
             } else if (operator.includes(payload)) state.result.push(payload);
@@ -47,8 +64,11 @@ export default createStore<State>({
             if (
                 payload === '( )' &&
                 getBracket(state.result).length % 2 === 1 &&
-                !Number.isNaN(Number(state.result[state.result.length - 1]))
+                isNumber(lastItem)
             ) state.result.push(')');
+            // else if (payload === '( )' && isNumber(lastItem)) state.result.push('x(');
+            else if (payload === '( )' && lastItem === ')') state.result.push('x(');
+            else if (payload === '( )' && numArr.includes(lastItem)) state.result.push('x(');
             else if (payload === '( )') state.result.push('(');
 
 
