@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {useStore} from "vuex";
-import {computed, ref, watch, watchEffect} from 'vue';
+import {computed} from 'vue';
 import BasicButton from "./design/BasicButton.vue";
 
 const store = useStore();
 const result = computed(() => {
-  return store.getters.getResultStrings
+  return store.getters.getResultViews
 })
 const calItems = computed(() => {
   return ['C', '( )', '%', '÷', '7', '8', '9', 'x', '4', '5', '6', '-', '1', '2', '3', '+', '+/-', '0', '.', '=']
@@ -13,7 +13,6 @@ const calItems = computed(() => {
 
 const itemSelect = (item: string) => {
   store.commit('setResultStrings', item);
-  console.log(item);
 }
 
 </script>
